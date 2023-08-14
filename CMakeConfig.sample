@@ -1,0 +1,3 @@
+CFLAGS = -Wall -Wextra -std=c++17 -O3 -D_GLIBCXX_DEBUG -ftrapv
+LINK_LIBRARIES = share
+INCLUDE_DIRECTORIES = 

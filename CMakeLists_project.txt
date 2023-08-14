@@ -1,0 +1,54 @@
+#
+# パラメータ
+#
+set(config_path "../CMakeConfig")   # 設定ファイルのパス
+set(target sample-project.out)      # 実行ファイル名
+
+
+#
+# 実行ファイルの作成
+#
+file(GLOB files "*.cpp")
+add_executable(${target} ${files})
+
+
+#
+# 設定ファイルの読み込み
+#
+file(READ ${config_path} read_data)
+string (REPLACE "\n" ";" lines ${read_data})
+
+# cflags
+list(GET lines 0 raw_cflags)
+string (REGEX REPLACE "CFLAGS ?= ?" "" cflags "${raw_cflags}")
+
+# link lib
+list(GET lines 1 raw_link_lib)
+string (REGEX REPLACE "LINK_LIBRARIES ?= ?" "" link_lib "${raw_link_lib}")
+string (REPLACE " " ";" link_lib_list "${link_lib}")
+
+# inc dir
+list(GET lines 2 raw_inc_dir)
+string (REGEX REPLACE "INCLUDE_DIRECTORIES ?= ?" "" inc_dir "${raw_inc_dir}")
+string (REPLACE " " ";" inc_dir_list "${inc_dir}")
+
+
+#
+# 設定の適用
+#
+# コンパイラオプション
+add_definitions("${cflags}")
+
+# リンク
+foreach(var IN LISTS link_lib_list)
+    target_link_libraries(${target} ${var})
+endforeach()
+    
+# インクルードディレクトリ
+foreach(var IN LISTS inc_dir_list)
+    target_include_directories(${target} PRIVATE ${var})
+endforeach()
+
+# OpenCV
+find_package( OpenCV REQUIRED )
+target_link_libraries(${target} ${OpenCV_LIBS})
