@@ -2,7 +2,8 @@
 #include <vector>
 #include <string>
 #include <exception>
-// #include "picojson.h"
+#include <fstream>
+#include "picojson.h"
 
 std::vector<std::string> split(std::string str, char del);
 
@@ -26,43 +27,43 @@ void print_passed_time(time_point time);
 -----------------------------------------------*/
 /* picojson は動作が重いため繰り返し処理では使わないこと */
 /* TODO : 存在しないキーが指定されたときの例外処理 */
-// class PicojsonWrapper
-// {
-//     using obj = picojson::object;
+class PicojsonWrapper
+{
+    using obj = picojson::object;
 
-// public:
-//     PicojsonWrapper(const std::string json_path)
-//     {
-//         std::ifstream ifs(json_path);
-//         if (!ifs)
-//             throw std::runtime_error("cannot open " + json_path);
-//         ifs >> val;
-//     }
+public:
+    PicojsonWrapper(const std::string json_path)
+    {
+        std::ifstream ifs(json_path);
+        if (!ifs)
+            throw std::runtime_error("cannot open " + json_path);
+        ifs >> val;
+    }
 
-//     template <typename T>
-//     T get(const std::string key) const
-//     {
-//         try
-//         {
-//             auto s = split(key, '/');
-//             return get_val(s).get<T>();
-//         }
-//         catch (std::exception &e)
-//         {
-//             throw std::runtime_error("picojson key error. [" + key + "]");
-//         }
-//     }
+    template <typename T>
+    T get(const std::string key) const
+    {
+        try
+        {
+            auto s = split(key, '/');
+            return get_val(s).get<T>();
+        }
+        catch (std::exception &e)
+        {
+            throw std::runtime_error("picojson key error. [" + key + "]");
+        }
+    }
 
-// public:
-//     picojson::value val;
+public:
+    picojson::value val;
 
-// private:
-//     picojson::value get_val(std::vector<std::string> keys) const
-//     {
-//         if (keys.size() == 1)
-//             return val.get<obj>().at(keys.back());
-//         auto next_key = keys.back();
-//         keys.erase(keys.end() - 1);
-//         return get_val(keys).get<obj>().at(next_key);
-//     }
-// };
+private:
+    picojson::value get_val(std::vector<std::string> keys) const
+    {
+        if (keys.size() == 1)
+            return val.get<obj>().at(keys.back());
+        auto next_key = keys.back();
+        keys.erase(keys.end() - 1);
+        return get_val(keys).get<obj>().at(next_key);
+    }
+};

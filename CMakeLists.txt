@@ -1,16 +1,18 @@
 #
 # パラメータ
 #
-set(config_path "../CMakeConfig")       # 設定ファイルのパス
-set(share_dir_path cxx-library/source)  # share のディレクトリのパス
-set(target share)                       # 実行ファイル名
+set(config_path "../CMakeConfig")           # 設定ファイルのパス
+set(share_dir_path1 cxx-library/source)     # share のディレクトリのパス
+set(share_dir_path1 cxx-library/picojson)   # share のディレクトリのパス
+set(target share)                           # 実行ファイル名
 
 #
 # 共有ライブラリ（*.so）を作成
 #
 file(GLOB files "source/*.cpp")
 add_library(${target} SHARED ${files})
-target_include_directories(${target} PUBLIC ${PROJECT_SOURCE_DIR}/${share_dir_path})
+target_include_directories(${target} PUBLIC ${PROJECT_SOURCE_DIR}/${share_dir_path1})
+target_include_directories(${target} PUBLIC ${PROJECT_SOURCE_DIR}/${share_dir_path2})
 
 #
 # コンパイラオプション
