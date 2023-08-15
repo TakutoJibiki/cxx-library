@@ -6,6 +6,9 @@
 #include "picojson.h"
 
 std::vector<std::string> split(std::string str, char del);
+std::string get_filename(const std::string &path);
+void get_filepath(const std::string &target_dir, std::vector<std::string> &filepaths);
+bool filename_comparator(const std::string &a, const std::string &b);
 
 /*-----------------------------------------------
 *
@@ -18,7 +21,7 @@ using time_point = std::chrono::system_clock::time_point; /* get_time で使用�
 inline time_point get_time(void) noexcept { return std::chrono::system_clock::now(); }
 
 double calc_sec(time_point start, time_point end = get_time()); /* 時間差を計算 */
-void print_passed_time(time_point time);
+const std::string calc_passed_time(time_point time);
 
 /*-----------------------------------------------
 *
