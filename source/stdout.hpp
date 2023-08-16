@@ -1,3 +1,5 @@
+#include <tuple>
+#include <vector>
 #include <ostream>
 
 /*-----------------------------------------------
