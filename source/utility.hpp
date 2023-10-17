@@ -9,6 +9,8 @@ std::vector<std::string> split(std::string str, char del);
 std::string get_filename(const std::string &path);
 void get_filepath(const std::string &target_dir, std::vector<std::string> &filepaths);
 bool filename_comparator(const std::string &a, const std::string &b);
+std::string join(const std::vector<std::string> vec, const char sep);
+std::string join(const std::vector<double> vec, const char sep);
 
 /*-----------------------------------------------
 *
