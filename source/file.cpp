@@ -2,6 +2,11 @@
 #include "utility.hpp"
 using std::cout, std::endl;
 
+/*-----------------------------------------------
+*
+* CSV ファイル読み込み
+*
+-----------------------------------------------*/
 void read_csv(std::vector<std::vector<double>> &table,
               const std::string path,
               bool header,
@@ -69,6 +74,11 @@ void read_csv(std::vector<std::vector<double>> &table,
     }
 }
 
+/*-----------------------------------------------
+*
+* CSV ファイル書き出し
+*
+-----------------------------------------------*/
 void to_csv(const std::vector<double> &table, const std::string path)
 {
     std::ofstream ofs(path);
@@ -91,4 +101,17 @@ void to_csv(const std::vector<std::vector<double>> &table, const std::string pat
 
     for (const auto &i : table)
         ofs << join(i, ',') << endl;
+}
+
+/*-----------------------------------------------
+*
+* ファイル列挙
+*
+-----------------------------------------------*/
+std::vector<std::string> glob(const std::string path)
+{
+    std::vector<std::string> dst;
+    for (const std::filesystem::directory_entry &x : std::filesystem::directory_iterator(path))
+        dst.emplace_back(x.path());
+    return std::move(dst);
 }
