@@ -107,7 +107,7 @@ const std::string calc_passed_time(time_point time)
 std::string join(const std::vector<std::string> vec, const char sep)
 {
     std::string dst = "";
-    for (int i = 0; i < vec.size(); ++i)
+    for (size_t i = 0; i < vec.size(); ++i)
     {
         dst += vec[i];
         if (i < vec.size() - 1)
@@ -119,7 +119,7 @@ std::string join(const std::vector<std::string> vec, const char sep)
 std::string join(const std::vector<double> vec, const char sep)
 {
     std::string dst = "";
-    for (int i = 0; i < vec.size(); ++i)
+    for (size_t i = 0; i < vec.size(); ++i)
     {
         dst += std::to_string(vec[i]);
         if (i < vec.size() - 1)

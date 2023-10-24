@@ -12,7 +12,7 @@ void read_csv(std::vector<std::vector<double>> &table,
               bool header,
               bool index,
               bool verbose,
-              const std::pair<int, int> size)
+              const std::pair<size_t, size_t> size)
 {
     std::ifstream ifs(path);
     assert(ifs);
@@ -21,7 +21,7 @@ void read_csv(std::vector<std::vector<double>> &table,
     if (header)
         ifs >> line;
 
-    if (size == std::pair<int, int>{0, 0})
+    if (size == std::pair<size_t, size_t>{0, 0})
     {
         int cnt1 = 0;
         int cnt2 = 0;
@@ -49,7 +49,7 @@ void read_csv(std::vector<std::vector<double>> &table,
                 s = std::vector<std::string>(s.begin() + 1, s.end());
 
             std::vector<double> tmp(s.size());
-            for (int i = 0; i < s.size(); ++i)
+            for (size_t i = 0; i < s.size(); ++i)
                 tmp[i] = std::stod(s[i]);
             table.emplace_back(tmp);
         }
@@ -61,7 +61,7 @@ void read_csv(std::vector<std::vector<double>> &table,
         auto [rows, cols] = size;
         table = std::vector<std::vector<double>>(rows, std::vector<double>(cols));
 
-        for (int i = 0; i < rows; ++i)
+        for (size_t i = 0; i < rows; ++i)
         {
             if (verbose)
                 cout << "\rCSV loading... " << int((i + 1) * 100.0 / rows) << " %" << std::flush;
@@ -72,7 +72,7 @@ void read_csv(std::vector<std::vector<double>> &table,
                 s = std::vector<std::string>(s.begin() + 1, s.end());
 
             assert(s.size() == cols);
-            for (int j = 0; j < cols; ++j)
+            for (size_t j = 0; j < cols; ++j)
                 table[i][j] = std::stod(s[j]);
         }
         if (verbose)
@@ -112,7 +112,7 @@ void to_csv(const std::vector<std::vector<double>> &table,
         ofs << join(header, ',') << endl;
     }
 
-    for (int i = 0; i < table.size(); ++i)
+    for (size_t i = 0; i < table.size(); ++i)
     {
         if (index)
             ofs << i << ",";
@@ -130,5 +130,5 @@ std::vector<std::string> glob(const std::string path)
     std::vector<std::string> dst;
     for (const std::filesystem::directory_entry &x : std::filesystem::directory_iterator(path))
         dst.emplace_back(x.path());
-    return std::move(dst);
+    return dst;
 }
