@@ -12,6 +12,18 @@ void get_filepath(const std::string &target_dir, std::vector<std::string> &filep
 bool filename_comparator(const std::string &a, const std::string &b);
 std::string join(const std::vector<std::string> vec, const char sep);
 std::string join(const std::vector<double> vec, const char sep);
+std::vector<double> discretize(const std::vector<double> &in, const double step);
+
+/*-----------------------------------------------
+*
+* 数学的操作
+*
+-----------------------------------------------*/
+/* 符号を返す */
+inline double sign(double x) { return (x > 0) ? 1 : -1; }
+
+/* double 型の比較用 */
+inline bool is_lesseq(double a, double b, const int precision = 5) { return a - std::pow(10.0, -precision) <= b; }
 
 /*-----------------------------------------------
 *

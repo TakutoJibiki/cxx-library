@@ -127,3 +127,29 @@ std::string join(const std::vector<double> vec, const char sep)
     }
     return dst;
 }
+
+/*-----------------------------------------------
+*
+* 与えられた数列を一定間隔に分割
+*
+-----------------------------------------------*/
+std::vector<double> discretize(const std::vector<double> &in, const double step)
+{
+    std::vector<double> discretized{in[0]};
+    for (int i = 1; i < int(in.size()); ++i)
+    {
+        double x1 = in[i - 1];
+        double x2 = in[i];
+        double dx = x2 - x1;
+        int n = std::abs(int(dx / step));
+
+        for (int j = 0; j < n; ++j)
+        {
+            double cand = x1 + step * (j + 1) * sign(dx);
+            if (cand * sign(dx) < x2 * sign(dx))
+                discretized.push_back(cand);
+        }
+        discretized.push_back(x2);
+    }
+    return discretized;
+}
