@@ -29,6 +29,14 @@ std::vector<std::string> split(std::string str, char del)
     }
     return ret;
 }
+std::vector<double> split_d(std::string str, char del)
+{
+    auto s = split(str, del);
+    std::vector<double> ret(s.size());
+    for (size_t i = 0; i < s.size(); ++i)
+        ret[i] = std::stod(s[i]);
+    return ret;
+}
 
 /*-----------------------------------------------
 *

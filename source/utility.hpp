@@ -4,15 +4,21 @@
 #include <string>
 #include <exception>
 #include <fstream>
+#include <limits>
 #include "picojson.h"
 
-std::vector<std::string> split(std::string str, char del);
+/*-----------------------------------------------
+*
+* 文字列操作
+*
+-----------------------------------------------*/
+std::vector<std::string> split(std::string str, char del = ',');
+std::vector<double> split_d(std::string str, char del = ',');
 std::string get_filename(const std::string &path);
 void get_filepath(const std::string &target_dir, std::vector<std::string> &filepaths);
 bool filename_comparator(const std::string &a, const std::string &b);
 std::string join(const std::vector<std::string> vec, const char sep);
 std::string join(const std::vector<double> vec, const char sep);
-std::vector<double> discretize(const std::vector<double> &in, const double step);
 
 /*-----------------------------------------------
 *
@@ -22,8 +28,14 @@ std::vector<double> discretize(const std::vector<double> &in, const double step)
 /* 符号を返す */
 inline double sign(double x) { return (x > 0) ? 1 : -1; }
 
-/* double 型の比較用 */
-inline bool is_lesseq(double a, double b, const int precision = 5) { return a - std::pow(10.0, -precision) <= b; }
+/* double 型の比較 */
+constexpr double DOUBLE_EPSILON = std::numeric_limits<double>::epsilon();
+inline double is_eq(double a, double b) { return std::abs(a - b) <= DOUBLE_EPSILON; }
+inline bool is_lesseq(double a, double b) { return is_eq(a, b) or a < b; }
+inline bool is_between(double a, double x, double b) { return is_lesseq(a, x) and is_lesseq(x, b); }
+
+/* 与えられた数列を一定間隔に分割 */
+std::vector<double> discretize(const std::vector<double> &in, const double step);
 
 /*-----------------------------------------------
 *
