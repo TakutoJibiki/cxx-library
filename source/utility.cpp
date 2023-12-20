@@ -1,6 +1,8 @@
 #include <iostream>
 #include <cmath>
 #include <filesystem>
+#include <sstream>
+#include <iomanip>
 #include "utility.hpp"
 
 /*-----------------------------------------------
@@ -76,6 +78,19 @@ bool filename_comparator(const std::string &a, const std::string &b)
     std::filesystem::path bp(b);
     int bi = std::stoi(bp.stem());
     return ai < bi;
+}
+
+/*-----------------------------------------------
+*
+* 進捗表示用の文字列を生成する
+*
+-----------------------------------------------*/
+std::string progress_str(const int numerator, const int denominator, const int precision)
+{
+    double rate = numerator * 100.0 / denominator;
+    std::stringstream ss;
+    ss << std::fixed << std::setprecision(precision) << rate << " %";
+    return ss.str();
 }
 
 /*-----------------------------------------------
