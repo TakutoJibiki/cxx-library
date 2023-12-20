@@ -48,7 +48,7 @@ using time_point = std::chrono::system_clock::time_point; /* get_time で使用�
 inline time_point get_time(void) noexcept { return std::chrono::system_clock::now(); }
 
 double calc_sec(time_point start, time_point end = get_time()); /* 時間差を計算 */
-const std::string calc_passed_time(time_point time);
+const std::string time_sec_to_str(double time_sec);             /* 文字列に変換 */
 
 /*-----------------------------------------------
 *

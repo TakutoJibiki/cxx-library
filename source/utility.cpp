@@ -92,18 +92,16 @@ double calc_sec(time_point start, time_point end)
 
 /*-----------------------------------------------
 *
-* 経過時間を計算
+* 文字列に変換
 *
 -----------------------------------------------*/
-const std::string calc_passed_time(time_point time)
+const std::string time_sec_to_str(double time_sec)
 {
-    std::string ret;
-    auto passed_time = calc_sec(time);
-    ret += std::to_string(int(std::floor(passed_time / 3600))) + " (h) ";
-    passed_time -= std::floor(passed_time / 3600) * 3600;
-    ret += std::to_string(int(std::floor(passed_time / 60))) + " (m) ";
-    passed_time -= std::floor(passed_time / 60) * 60;
-    ret += std::to_string(int(std::floor(passed_time))) + " (s)";
+    std::string ret = std::to_string(int(std::floor(time_sec / 3600))) + " (h) ";
+    time_sec -= std::floor(time_sec / 3600) * 3600;
+    ret += std::to_string(int(std::floor(time_sec / 60))) + " (m) ";
+    time_sec -= std::floor(time_sec / 60) * 60;
+    ret += std::to_string(int(std::floor(time_sec))) + " (s)";
     return ret;
 }
 
