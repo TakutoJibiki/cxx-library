@@ -19,7 +19,6 @@ void get_filepath(const std::string &target_dir, std::vector<std::string> &filep
 bool filename_comparator(const std::string &a, const std::string &b);
 std::string join(const std::vector<std::string> vec, const char sep);
 std::string join(const std::vector<double> vec, const char sep);
-std::string progress_str(const int numerator, const int denominator, const int precision = 2);
 
 /*-----------------------------------------------
 *
@@ -50,6 +49,7 @@ inline time_point get_time(void) noexcept { return std::chrono::system_clock::no
 
 double calc_sec(time_point start, time_point end = get_time()); /* 時間差を計算 */
 const std::string time_sec_to_str(double time_sec);             /* 文字列に変換 */
+std::string progress_str(const int numerator, const int denominator, time_point init_time, const int precision = 2);
 
 /*-----------------------------------------------
 *

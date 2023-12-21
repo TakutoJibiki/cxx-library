@@ -82,19 +82,6 @@ bool filename_comparator(const std::string &a, const std::string &b)
 
 /*-----------------------------------------------
 *
-* 進捗表示用の文字列を生成する
-*
------------------------------------------------*/
-std::string progress_str(const int numerator, const int denominator, const int precision)
-{
-    double rate = numerator * 100.0 / denominator;
-    std::stringstream ss;
-    ss << std::fixed << std::setprecision(precision) << rate << " %";
-    return ss.str();
-}
-
-/*-----------------------------------------------
-*
 * 時間差を計算
 *
 -----------------------------------------------*/
@@ -173,4 +160,18 @@ std::vector<double> discretize(const std::vector<double> &in, const double step)
         discretized.push_back(x2);
     }
     return discretized;
+}
+
+/*-----------------------------------------------
+*
+* 進捗表示用の文字列を生成する
+*
+-----------------------------------------------*/
+std::string progress_str(const int numerator, const int denominator, time_point init_time, const int precision)
+{
+    double rate = numerator * 100.0 / denominator;
+    std::stringstream ss;
+    ss << std::fixed << std::setprecision(precision) << rate << " % | ";
+    ss << time_sec_to_str(calc_sec(init_time));
+    return ss.str();
 }
